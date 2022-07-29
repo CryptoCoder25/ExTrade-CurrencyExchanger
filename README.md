@@ -1,8 +1,8 @@
 # ExTrade-CurrencyExchanger
 
-### I'm a fan of fintech and had a lot of fun developing the app and using the exchange rate API, so I added some extra features.
+#### I'm a fan of fintech and had a lot of fun developing the app and using the exchange rate API, so I added some extra features.
 
-## Features of this app:
+### Features of this app:
 1. Exchange Multiple Currencies
 2. View Conversion History
 3. View & Add Balance of Currencies
