@@ -32,7 +32,7 @@ class LocalDbOperation  @Inject constructor (private val transactionRepository: 
                 purchasedValue = transactionDigit.first,
                fromCountryCode =  conversionData.get("FROM_COUNTRY_CODE").toString(),
                toCountryCode=  conversionData.get("TO_COUNTRY_CODE").toString(),
-               commission = ("%.2f".format(transactionDigit.second)).toDouble(),
+               commission = transactionDigit.second,
             )
         )
 

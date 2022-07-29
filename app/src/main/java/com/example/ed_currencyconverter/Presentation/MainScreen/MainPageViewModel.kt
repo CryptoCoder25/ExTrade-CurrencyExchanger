@@ -40,7 +40,7 @@ class MainPageViewModel  @Inject constructor(val repository: LatestRateRepositor
         private set
     var accountBalance  by mutableStateOf(0.00)
         private set
-    var targetCurrencyBalance by mutableStateOf("0.00")
+    var targetCurrencyBalance by mutableStateOf(0.00)
         private set
 
     private val _eventFlow = MutableSharedFlow<CommonUiEvents>()
@@ -53,11 +53,13 @@ class MainPageViewModel  @Inject constructor(val repository: LatestRateRepositor
 
     init {
 
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
+
                 localDbOperation.getTransactions().collect{
                     countRecords =  it.size
                     accountBalance = localDbOperation.getAccountStats(sellingCurrency)?.balance ?: 0.00
-                    targetCurrencyBalance =   (localDbOperation.getAccountStats(buyingCurrency)?.balance ?: 0.00).toString()
+                    targetCurrencyBalance =  (localDbOperation.getAccountStats(buyingCurrency)?.balance ?: 0.00)
+
                 }
 
         }
@@ -102,7 +104,7 @@ class MainPageViewModel  @Inject constructor(val repository: LatestRateRepositor
                 buyingCountryCode = event.buyingCountryCode
 
                 viewModelScope.launch(Dispatchers.IO) {
-                        targetCurrencyBalance =  (localDbOperation.getAccountStats(buyingCurrency)?.balance ?: 0.00).toString()
+                        targetCurrencyBalance =  (localDbOperation.getAccountStats(buyingCurrency)?.balance ?: 0.00)
                 }
 
             }
@@ -133,6 +135,8 @@ class MainPageViewModel  @Inject constructor(val repository: LatestRateRepositor
                         _eventFlow.emit(CommonUiEvents.ShowDialog(Constant.INTERNAL,"1$sellingCurrency is the minimum transaction is  for $sellingCurrency account."))
                         return@launch
                     }
+
+                    accountBalance = localDbOperation.getAccountStats(sellingCurrency)?.balance ?: 0.00
 
                     if((accountBalance < amount.toDouble())){
 
@@ -204,14 +208,16 @@ class MainPageViewModel  @Inject constructor(val repository: LatestRateRepositor
                                result.data!!.date)
 
                           var cost = getCommissionFee(convertedValue!!)
-
-                          var fee = ("%.2f".format(amount.toDouble() * cost.second)).toDouble()
+                           var fee = ("%.2f".format(amount.toDouble() * cost.second)).toDouble()
 
                            _eventFlow.emit(CommonUiEvents.ShowDialog(Constant.SUCCESS,
                                "You have converted $amount$sellingCurrency to " +
                                        cost.first.toString()+"$buyingCurrency. " +
                                        "Commission Fee: "+ (fee)+sellingCurrency))
                             amount =  ""
+
+                           accountBalance = localDbOperation.getAccountStats(sellingCurrency)?.balance ?: 0.00
+                           targetCurrencyBalance =  (localDbOperation.getAccountStats(buyingCurrency)?.balance ?: 0.00)
 
                        } catch(e: IOException) {
                            _eventFlow.emit(CommonUiEvents.ShowDialog(Constant.INTERNAL,Constant.INTERNAL_MESSAGEBODY))
