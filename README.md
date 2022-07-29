@@ -15,11 +15,11 @@
 1. Need to test to other devices and screen layout not yet fully optimize to other sizes.
 2. Refactor some code for unit testing and connect to third party apps.
 
-### Tech Stack and Design Pattern Used:
+#### Tech Stack and Design Pattern Used:
  
  Android Kotlin (Kotlin Flow & Courotines), Jetpack Compose, Dagger Hilt, MVVM, Retrofit, Room Sqlite, Coil and Gson.  
 
-### Screenshots:
+#### Screenshots:
  
 <table>
  <tr>
