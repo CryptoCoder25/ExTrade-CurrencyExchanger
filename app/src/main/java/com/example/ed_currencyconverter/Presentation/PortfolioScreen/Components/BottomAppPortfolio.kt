@@ -1,0 +1,110 @@
+package com.example.ed_currencyconverter.Presentation.PortfolioScreen.Components
+
+
+
+
+import android.content.Context
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.ed_currencyconverter.Presentation.MainScreen.MainPageEvents
+import com.example.ed_currencyconverter.Presentation.MainScreen.MainPageViewModel
+import com.example.ed_currencyconverter.Presentation.PortfolioScreen.PortfolioPageEvents
+import com.example.ed_currencyconverter.Presentation.PortfolioScreen.PortfolioViewModel
+import com.example.ed_currencyconverter.Presentation.TrasactionListsScreen.TransactionListPageEvents
+import com.example.ed_currencyconverter.Presentation.TrasactionListsScreen.TransactionsListViewModel
+import com.example.ed_currencyconverter.Utils.AppBottomItem
+
+
+@OptIn(ExperimentalAnimationApi::class)
+@Composable
+fun BottomAppBarPortfolio(
+    currentScreenId: String,
+    onItemSelected:(AppBottomItem)->Unit
+
+) {
+
+    val items= AppBottomItem.Items.list
+    val context = LocalContext.current
+    Row(
+        modifier= Modifier
+            .background(MaterialTheme.colors.background)
+            .padding(8.dp)
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceAround,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+
+        items.forEach { item->
+
+            CustomBottomNavigationItem(item = item, isSelected = item.id==currentScreenId,context) {
+                onItemSelected(item)
+            }
+
+        }
+
+    }
+
+}
+
+@ExperimentalAnimationApi
+@Composable
+fun CustomBottomNavigationItem(
+    item:AppBottomItem,
+    isSelected:Boolean,
+    context: Context,
+    onClick:()->Unit){
+
+    val viewModel: PortfolioViewModel =  hiltViewModel()
+    val background=if (isSelected) MaterialTheme.colors.primary.copy(alpha = 0.1f) else Color.Transparent
+    val contentColor=if (isSelected) MaterialTheme.colors.primary else MaterialTheme.colors.onBackground
+
+    Box(
+        modifier = Modifier
+            .clip(CircleShape)
+            .background(background)
+            .clickable(onClick = onClick)
+    ){
+        Row(
+            modifier=Modifier
+                .padding(12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
+
+            Icon(
+                imageVector = item.icon,
+                contentDescription =null,
+                tint = contentColor
+            )
+
+            AnimatedVisibility(visible = isSelected) {
+                Text(
+                    text = item.title,
+                    color=contentColor,
+                    modifier = Modifier.clickable(onClick = {
+
+                        viewModel.onEvent(PortfolioPageEvents.onClickAppBarItem(item.id))
+                    })
+                )
+            }
+
+        }
+    }
+
+
+}
