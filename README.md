@@ -1,25 +1,25 @@
-# ExTrade-CurrencyExchanger
+## ExTrade-CurrencyExchanger
 
 #### I'm a fan of fintech and had a lot of fun developing the app and using the exchange rate API, so I added some extra features.
 
-### Features of this app:
+#### Features of this app:
 1. Exchange Multiple Currencies
 2. View Conversion History
 3. View & Add Balance of Currencies
 4. Navigation Menu
 5. Custom Dialogs
 
-### Development Timeline: 1-3hrs daily for 6 days (I only have limited time daily due to my other projects & schedules).
+#### Development Timeline: 1-3hrs daily for 6 days (I only have limited time daily due to my other projects & schedules).
 
-### Limitation And For further development.
+#### Limitation And For further development.
 1. Need to test to other devices and screen layout not yet fully optimize to other sizes.
 2. Refactor some code for unit testing and connect to third party apps.
 
-## Tech Stack and Design Pattern Used:
+### Tech Stack and Design Pattern Used:
  
  Android Kotlin (Kotlin Flow & Courotines), Jetpack Compose, Dagger Hilt, MVVM, Retrofit, Room Sqlite, Coil and Gson.  
 
-## Screenshots:
+### Screenshots:
  
 <table>
  <tr>
