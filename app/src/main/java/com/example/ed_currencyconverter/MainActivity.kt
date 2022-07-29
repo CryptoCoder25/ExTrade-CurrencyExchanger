@@ -32,17 +32,6 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             EDCurrencyConverterTheme {
-               /* val scaffoldState = rememberScaffoldState()
-                Scaffold(
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    scaffoldState = scaffoldState
-                ) {
-                  //MainPage(scaffoldState)
-                   // PreviewMain()
-                    TransactionListPage(isDarkTheme = false)
-                } */
-               // ItemPortfolioCard()
                 val activity = (LocalContext.current as? Activity)
                 AppContent(currentScreen,activity)
             }
